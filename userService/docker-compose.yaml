@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+
+  user-service-db:
+    container_name: user-service-db
+    platform: linux/amd64
+    image: postgres:15.2-alpine
+    ports:
+      - "54322:5432"
+    restart: always
+    env_file: './psql/local/.env.local'
+    volumes:
+      - user-service-backend-data:/var/lib/postgresql/data
+    networks:
+      - dj-microservice-net
+
+  user-service-backend:
+    container_name: user-service-backend
+    command: /scripts/run.sh
+    build:
+      context: ./be
+      args:
+        - DEV=true
+    tty: true
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    working_dir: /app
+    env_file: './be/.env.local'
+    environment:
+      CONTAINER_ENV: local
+    volumes:
+      - ./be:/app
+    depends_on:
+      - user-service-db
+    networks:
+      - dj-microservice-net
+
+volumes:
+  user-service-backend-data:
+
+networks:
+  dj-microservice-net:
+    driver: bridge
+
