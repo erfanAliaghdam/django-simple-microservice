@@ -46,4 +46,6 @@ Inside each `.env.local` file, add the RabbitMQ URL in the following format:
 RABBITMQ_Q=amqp://...
 ```
 
+## Testing REST API Endpoints
 
+You can use the `.HTTP` files inside the `requests` folder inside `userService` to test the REST API endpoints.
