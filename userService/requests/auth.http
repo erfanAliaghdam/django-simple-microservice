@@ -1,5 +1,6 @@
 
 ### Login Request ###
+// Description: This request is for user login. The logger microservice saves a log for user login.
 POST http://127.0.0.1:8000/api/v1/auth/login/
 Content-Type: application/json
 
@@ -10,6 +11,7 @@ Content-Type: application/json
 
 
 ### Register Request ###
+// This request is for user registration. The mail microservice handles sending an email for registering.
 POST http://127.0.0.1:8000/api/v1/auth/client/register/
 Content-Type: application/json
 
