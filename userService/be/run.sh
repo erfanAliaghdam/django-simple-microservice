@@ -5,6 +5,7 @@ set -e
 if [ "$CONTAINER_ENV" = "local" ]; then
   echo "Running Commands For Local Environment ..."
   python manage.py wait_for_db
+  python manage.py rbmq_health_check
   python manage.py makemigrations
   python manage.py migrate
   python manage.py runserver 0.0.0.0:8000

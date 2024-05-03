@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  mail-service-consumer:
+    container_name: mail-service-consumer
+    build:
+      context: ./be
+      args:
+        - DEV=true
+    command: "python3 -m consumer.py"
+    tty: true
+    restart: unless-stopped
+    working_dir: /app
+    env_file:
+      - './be/.env.local'
+      - './rabbitmq/local/.env.local'
+    volumes:
+      - ./be:/app
+    networks:
+      - dj-mail-microservice-net
+
+networks:
+  dj-mail-microservice-net:
+    driver: bridge
+

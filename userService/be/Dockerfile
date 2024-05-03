@@ -2,7 +2,6 @@ FROM python:3.10
 
 LABEL maintainer="aliaghdam.erfan@gmail.com"
 
-
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app

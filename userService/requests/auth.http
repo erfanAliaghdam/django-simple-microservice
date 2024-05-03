@@ -1,0 +1,21 @@
+
+### Login Request ###
+POST http://127.0.0.1:8000/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "DefaultPassword"
+}
+
+
+### Register Request ###
+POST http://127.0.0.1:8000/api/v1/auth/client/register/
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "johndoe@example.com",
+  "password": "DefaultPassword"
+}

@@ -1,10 +1,11 @@
 from pathlib import Path
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-qxv)3k9!+4cugmfy9d0h$1vtdml-=n9ykec5p8t$3dizsz(b=5"
+SECRET_KEY = os.environ.get("DJANGO_SECRET", "insecure")
 
 DEBUG = True
 
@@ -19,12 +20,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # apps
-    "core"
+    "core.apps.CoreConfig",
+    "user.apps.UserConfig",
+    # third party apps
+    "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -37,7 +43,7 @@ ROOT_URLCONF = "app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "be/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -53,14 +59,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "app.wsgi.application"
 
 
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.environ.get("POSTGRES_ENGINE"),
+        "HOST": os.environ.get("POSTGRES_DB"),
+        "NAME": os.environ.get("POSTGRES_NAME"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -79,7 +87,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -93,3 +100,18 @@ STATIC_URL = "static/"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication"
+    ),
+    "EXCEPTION_HANDLER": "core.exceptions.exception_handler.custom_exception_handler",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 5,
+}
+
+USER_IDENTIFIER_PREFIX = os.environ.get("USER_IDENTIFIER_PREFIX", "user")
+
+AUTH_USER_MODEL = "user.User"
+
+RABBITMQ_Q = os.environ.get("RABBITMQ_Q")

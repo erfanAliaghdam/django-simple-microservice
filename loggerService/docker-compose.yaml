@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  logger-service-backend:
+    container_name: logger-service-backend
+    command: "python3 manage.py consumers"
+    build:
+      context: ./be
+      args:
+        - DEV=true
+    tty: true
+    restart: unless-stopped
+    working_dir: /app
+    env_file:
+      - './be/.env.local'
+      - './rabbitmq/local/.env.local'
+    environment:
+      CONTAINER_ENV: local
+    volumes:
+      - ./be:/app
+    networks:
+      - dj-microservice-net
+
+volumes:
+  logger-service-backend-data:
+
+networks:
+  dj-microservice-net:
+    driver: bridge
+

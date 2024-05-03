@@ -27,7 +27,10 @@ services:
       - "8000:8000"
     restart: unless-stopped
     working_dir: /app
-    env_file: './be/.env.local'
+    env_file:
+      - './be/.env.local'
+      - './rabbitmq/local/.env.local'
+      - './psql/local/.env.local'
     environment:
       CONTAINER_ENV: local
     volumes:

@@ -1,0 +1,2 @@
+from .register_client_user_views import register_client_user_view
+from .login_client_user_views import login_user_view
