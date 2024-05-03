@@ -1,4 +1,3 @@
-
 from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -23,11 +22,7 @@ class UserServiceTest(TestCase):
     @patch("user.services.user_service.publish")
     @patch("user.services.user_service.json.dumps")
     def test_register_client_user_successfully(
-        self,
-        json_mock,
-        publish_mock, 
-        user_repository_mock,
-        serializer_mock  
+        self, json_mock, publish_mock, user_repository_mock, serializer_mock
     ):
         user_repository_mock.return_value = self.user
         json_mock.return_value = None

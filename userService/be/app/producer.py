@@ -12,6 +12,9 @@ channel = connection.channel()
 def publish(method, body, routing_key):
     properties = pika.BasicProperties(method)
     channel.basic_publish(
-        exchange="", routing_key=routing_key, body=json.dumps(body), properties=properties
+        exchange="",
+        routing_key=routing_key,
+        body=json.dumps(body),
+        properties=properties,
     )
     logging.info(f"Publishing {method} from user service.")

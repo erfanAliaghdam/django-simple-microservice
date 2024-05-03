@@ -20,4 +20,3 @@ class BaseAPITestClass(BaseTestClass):
 
     def authenticate_user(self, user):
         self.client.force_authenticate(user)
-

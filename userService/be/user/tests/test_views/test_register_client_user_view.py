@@ -16,7 +16,9 @@ class RegisterClientUserViewTest(BaseAPITestClass):
         }
         self.invalid_data = {"invalid": "invalid"}
 
-    @patch("user.api.v1.views.register_client_user_views.UserService.register_client_user")
+    @patch(
+        "user.api.v1.views.register_client_user_views.UserService.register_client_user"
+    )
     @patch("user.api.v1.views.register_client_user_views.Token.objects.get_or_create")
     def test_user_can_register_successfully_returns_201(
         self, token_mock, register_client_service_mock

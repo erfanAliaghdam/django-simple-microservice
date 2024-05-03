@@ -11,7 +11,6 @@ class LoginClientUserViewTest(BaseAPITestClass):
         self.valid_data = {"email": self.user.email, "password": self.user_password}
         self.invalid_data = {"invalid": "invalid"}
 
-
     @patch("user.api.v1.views.login_client_user_views.publish")
     @patch("user.api.v1.views.login_client_user_views.authenticate")
     @patch("user.api.v1.views.login_client_user_views.Token.objects.get_or_create")
@@ -28,7 +27,6 @@ class LoginClientUserViewTest(BaseAPITestClass):
             response.data["message"], "User token retrieved in successfully."
         )
         publish_mock.assert_called_once()
-
 
     @patch("user.api.v1.views.login_client_user_views.authenticate")
     @patch("user.api.v1.views.login_client_user_views.Token.objects.get_or_create")

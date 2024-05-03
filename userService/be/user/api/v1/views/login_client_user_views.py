@@ -46,15 +46,15 @@ def login_user_view(request):
         )
     # get or create token
     token, _ = Token.objects.get_or_create(user=user)
-    user_device = request.META.get('HTTP_USER_AGENT', None)
-    user_ip = request.META.get('REMOTE_ADDR', None)
+    user_device = request.META.get("HTTP_USER_AGENT", None)
+    user_ip = request.META.get("REMOTE_ADDR", None)
     user_id = user.id
     request_time = datetime.now()
     request_data = {
         "user_device": user_device,
         "user_ip": user_ip,
         "user_id": user_id,
-        "request_time": int(request_time.timestamp())
+        "request_time": int(request_time.timestamp()),
     }
     publish("user_logged_in", request_data, "log")
     return Response(
