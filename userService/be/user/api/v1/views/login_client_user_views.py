@@ -55,6 +55,7 @@ def login_user_view(request):
         "user_ip": user_ip,
         "user_id": user_id,
         "request_time": int(request_time.timestamp()),
+        "user_email": user.email
     }
     publish("user_logged_in", request_data, "log")
     return Response(

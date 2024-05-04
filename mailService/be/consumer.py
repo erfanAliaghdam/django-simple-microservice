@@ -23,6 +23,9 @@ def callback(ch, method, properties, body):
         print("User registeration triggered.")
         mail_service.send_mail()
 
+    if properties.content_type == "user_new_device_login":
+        print("User new device login triggered.")
+        mail_service.send_mail()
 
 channel.basic_consume(queue="mail", on_message_callback=callback, auto_ack=True)
 
