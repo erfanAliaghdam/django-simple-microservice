@@ -5,12 +5,14 @@ from rest_framework.authtoken.models import Token
 from app.producer import publish
 from datetime import datetime
 from user.api.v1.serializers import LoginClientUserSerializer
+from core.helpers import get_client_ip
 from rest_framework.decorators import (
     api_view,
     permission_classes,
     authentication_classes,
 )
-import json
+
+
 
 
 @api_view(["POST"])
@@ -47,7 +49,7 @@ def login_user_view(request):
     # get or create token
     token, _ = Token.objects.get_or_create(user=user)
     user_device = request.META.get("HTTP_USER_AGENT", None)
-    user_ip = request.META.get("REMOTE_ADDR", None)
+    user_ip = get_client_ip(request=request)
     user_id = user.id
     request_time = datetime.now()
     request_data = {
